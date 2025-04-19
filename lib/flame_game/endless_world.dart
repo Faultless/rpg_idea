@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:endless_runner/flame_game/components/potion.dart';
+import 'package:endless_runner/flame_game/endless_runner.dart';
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
@@ -25,7 +28,8 @@ import 'game_screen.dart';
 ///  - The [HasGameReference] that gives the world access to a variable called
 ///  `game`, which is a reference to the game class that the world is attached
 ///  to.
-class EndlessWorld extends World with TapCallbacks, HasGameReference {
+class EndlessWorld extends World
+    with TapCallbacks, HasGameReference<EndlessRunner> {
   EndlessWorld({
     required this.level,
     required this.playerProgress,
@@ -72,6 +76,7 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     // Dash in this case.
     player = Player(
       position: Vector2(-size.x / 3, groundLevel - 900),
+      addItem: addItem,
       addScore: addScore,
       resetScore: resetScore,
     );
@@ -105,6 +110,17 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
       ),
     );
 
+    add(SpawnComponent.periodRange(
+      factory: (_) => Potion.random(),
+      minPeriod: 2.0,
+      maxPeriod: 2.0 + level.number,
+      area: Rectangle.fromPoints(
+        Vector2(size.x / 2, groundLevel),
+        Vector2(size.x / 2, groundLevel),
+      ),
+      random: _random,
+    ));
+
     // When the player takes a new point we check if the score is enough to
     // pass the level and if it is we calculate what time the level was passed
     // in, update the player's progress and open up a dialog that shows that
@@ -133,6 +149,7 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     // When the world is mounted in the game we add a back button widget as an
     // overlay so that the player can go back to the previous screen.
     game.overlays.add(GameScreen.backButtonKey);
+    game.overlays.add(GameScreen.inventoryKey);
   }
 
   @override
@@ -146,6 +163,10 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     playerProgress.setStrength(playerProgress.strength + 1);
     game.pauseEngine();
     game.overlays.add(GameScreen.backButtonKey);
+  }
+
+  void addItem({required Item item}) {
+    game.inventory.add(item);
   }
 
   /// Gives the player points, with a default value +1 points.

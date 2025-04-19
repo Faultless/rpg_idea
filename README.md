@@ -1,24 +1,30 @@
-# Endless Runner Template
+# Endless Runner RPG
 
-This is a starter Flutter and Flame project with an endless runner game built
-in Flutter & Flame, it includes the following features:
+A simple RPG Endless Runner with a simple inventory and equipment system.
 
-Flutter features:
-- A `FlameGame` base
-- Main menu screen
-- Basic navigation
-- Game-y theming
-- Settings
-- Sound
+## Checklist
 
-Flame features:
-- Player steering
-- Collision detection
-- Parallax
-- Effects
-- Spawns
+- Gameplay:
+  - [] character is still endlessly running
+  - [] he has a sword and can attack with a slash (by tapping the attack button)
+    - [] Load weapon spritesheet
+    - [] Simple forward slash attack animation
+    - [] Add attack button
+  - [] The character has an inventory that can be used to pick up items
+    - [] Display inventory
+    - [] Items can be right clicked for context menu
+    - [] weapons are equipable from inventory
+  - [] health potions and weapons can be picked up and used
+    - [] potions
+      - [X] spawn potions randomly on the floor (like obstacles)
+      - [] display potions in inventory
+      - [] add potion use button
+    - [] weapons
 
-You can jump directly into building your game in `lib/flame_game/`.
+- Release:
+  - [] Make a google developer account
+  - [] Build the flutter app for android
+  - [] Upload the game to the google play store
 
 When you're ready for things like ads, in-app purchases, achievements,
 analytics, crash reporting, and so on, there are resources ready for you

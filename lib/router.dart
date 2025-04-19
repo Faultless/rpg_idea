@@ -1,3 +1,4 @@
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +34,11 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 final levelNumber = int.parse(state.pathParameters['level']!);
                 final level = gameLevels[levelNumber - 1];
+                final inventory = Inventory();
                 return buildPageTransition<void>(
                   key: const ValueKey('level'),
                   color: context.watch<Palette>().backgroundPlaySession.color,
-                  child: GameScreen(level: level),
+                  child: GameScreen(inventory: inventory, level: level),
                 );
               },
             ),

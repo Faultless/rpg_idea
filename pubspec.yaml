@@ -36,6 +36,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/potion.png
     - assets/images/dash/
     - assets/images/enemies/
     - assets/images/scenery/

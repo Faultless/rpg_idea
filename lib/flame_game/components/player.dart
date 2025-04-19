@@ -1,3 +1,5 @@
+import 'package:endless_runner/flame_game/components/potion.dart';
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/animation.dart';
@@ -19,11 +21,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
         HasGameReference<EndlessRunner> {
   Player({
     required this.addScore,
+    required this.addItem,
     required this.resetScore,
     super.position,
   }) : super(size: Vector2.all(150), anchor: Anchor.center, priority: 1);
 
   final void Function({int amount}) addScore;
+
+  final void Function({required Item item}) addItem;
   final VoidCallback resetScore;
 
   // The current velocity that the player has that comes from being affected by
@@ -119,6 +124,14 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       game.audioController.playSfx(SfxType.score);
       other.removeFromParent();
       addScore();
+    } else if (other is Potion) {
+      game.audioController.playSfx(SfxType.potion);
+      other.removeFromParent();
+      addItem(
+          item: Item(
+              name: 'Potion',
+              description: 'Heals 10 points',
+              image: 'potion.png'));
     }
   }
 

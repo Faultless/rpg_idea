@@ -1,3 +1,4 @@
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ import 'endless_world.dart';
 /// could also be set inside of `onLoad` for example.
 class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
   EndlessRunner({
+    required this.inventory,
     required this.level,
     required PlayerProgress playerProgress,
     required this.audioController,
@@ -30,6 +32,8 @@ class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
           world: EndlessWorld(level: level, playerProgress: playerProgress),
           camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
         );
+
+  final Inventory inventory;
 
   /// What the properties of the level that is played has.
   final GameLevel level;

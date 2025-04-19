@@ -12,7 +12,7 @@ class PlayerProgress extends ChangeNotifier {
   static const _dexterityKey = '${_prefix}dexterity';
   static const _intelligenceKey = '${_prefix}intelligence';
 
-  List _levels = [];
+  final List _levels = [];
   int _level = 1;
   int _strength = 5;
   int _dexterity = 5;
