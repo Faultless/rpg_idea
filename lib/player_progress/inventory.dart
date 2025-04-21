@@ -6,6 +6,11 @@ class Item {
   final String image;
 
   Item({required this.name, required this.description, required this.image});
+
+  void action() {
+    // Define the action to be performed when the item is used
+    print('Using item: $name');
+  }
 }
 
 class Inventory extends ChangeNotifier {
@@ -18,8 +23,17 @@ class Inventory extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(Item item) {
-    _items.remove(item);
+  void remove(int itemIdx) {
+    if (itemIdx < 0 || itemIdx >= _items.length) {
+      return; // Invalid index, do nothing
+    }
+    _items.removeAt(itemIdx);
     notifyListeners();
+  }
+
+  void use(Item item) {
+    item.action();
+    
+    remove(_items.indexOf(item));
   }
 }

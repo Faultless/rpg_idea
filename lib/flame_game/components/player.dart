@@ -22,6 +22,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   Player({
     required this.addScore,
     required this.addItem,
+    required this.removeItem,
+    required this.useItem,
     required this.resetScore,
     super.position,
   }) : super(size: Vector2.all(150), anchor: Anchor.center, priority: 1);
@@ -29,7 +31,11 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   final void Function({int amount}) addScore;
 
   final void Function({required Item item}) addItem;
+  final void Function({required int itemIdx}) removeItem;
+  final void Function({required Item item}) useItem;
   final VoidCallback resetScore;
+
+  double _hitPoints = 10;
 
   // The current velocity that the player has that comes from being affected by
   // the gravity. Defined in virtual pixels/s².
@@ -49,6 +55,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   // When the player has velocity pointing downwards it is counted as falling,
   // this is used to set the correct animation for the player.
   bool get isFalling => _lastPosition.y < position.y;
+
+  double get hitPoints => _hitPoints;
 
   @override
   Future<void> onLoad() async {
@@ -116,6 +124,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     // When the player collides with an obstacle it should lose all its points.
     if (other is Obstacle) {
       game.audioController.playSfx(SfxType.damage);
+      // The player should lose 1 hit point when colliding with an obstacle.
+      _hitPoints -= 1;
       resetScore();
       add(HurtEffect());
     } else if (other is Point) {

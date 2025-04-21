@@ -1,3 +1,4 @@
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,7 @@ class MyGame extends StatelessWidget {
           ChangeNotifierProvider<PlayerProgress>(
             create: (context) => PlayerProgress(),
           ),
+          ChangeNotifierProvider(create: (context) => Inventory()),
           Provider(create: (context) => SettingsController()),
           // Set up audio.
           ProxyProvider2<SettingsController, AppLifecycleStateNotifier,

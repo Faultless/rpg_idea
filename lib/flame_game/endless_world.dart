@@ -77,6 +77,8 @@ class EndlessWorld extends World
     player = Player(
       position: Vector2(-size.x / 3, groundLevel - 900),
       addItem: addItem,
+      removeItem: removeItem,
+      useItem: useItem,
       addScore: addScore,
       resetScore: resetScore,
     );
@@ -167,6 +169,14 @@ class EndlessWorld extends World
 
   void addItem({required Item item}) {
     game.inventory.add(item);
+  }
+
+  void removeItem({required int itemIdx}) {
+    game.inventory.remove(itemIdx);
+  }
+
+  void useItem({required Item item}) {
+    game.inventory.use(item);
   }
 
   /// Gives the player points, with a default value +1 points.

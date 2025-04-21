@@ -1,4 +1,5 @@
 import 'package:endless_runner/flame_game/endless_runner.dart';
+import 'package:endless_runner/player_progress/inventory.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nes_ui/nes_ui.dart';
@@ -32,16 +33,18 @@ class GameInventoryDialog extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: game.inventory.items.length,
+                child: Consumer<Inventory>(
+                  builder: (context, inventory, _) => ListView.builder(
+                  itemCount: inventory.items.length,
                   itemBuilder: (context, index) => ListTile(
                     leading: Image.asset('assets/images/potion.png'),
                     title: Text('Potion ${index + 1}'),
                     trailing: NesButton(
-                      onPressed: () =>
-                          game.inventory.remove(game.inventory.items[index]),
-                      type: NesButtonType.normal,
-                      child: const Icon(Icons.delete),
+                        onPressed: () =>
+                            inventory.use(inventory.items[index]),
+                        type: NesButtonType.normal,
+                        child: const Icon(Icons.delete),
+                      )
                     ),
                   ),
                 ),
